@@ -199,7 +199,7 @@ To contribute to our study, please submit this [form](https://docs.google.com/fo
 
 * **Differential analysis - others**
 
-  - 2020 - [Quantifying Waddingtonâ€™s epigenetic landscape: a comparison of single-cell potency measures](https://pubmed.ncbi.nlm.nih.gov/30289442/)
+  - 2020 - [Quantifying Waddington's epigenetic landscape: a comparison of single-cell potency measures](https://pubmed.ncbi.nlm.nih.gov/30289442/)
 
 * **Differential expression**
 
