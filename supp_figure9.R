@@ -5,7 +5,12 @@ library(ggthemes)
 library(viridis)
 library(readr)
 
-theme_set(theme_classic())
+theme_set(theme_bw() +
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size = 1),
+                  axis.text.x = element_text(color = "black", angle = 45, hjust = 1),
+                  axis.text.y = element_text(color = "black")))
 
  
 data <- read_csv("data.csv")
@@ -24,7 +29,7 @@ library(scales)
 
 df_numeric <- data
 
- 
+
 df_numeric$Paper.category <- recode(df_numeric$Paper.category  ,
                                     `Pure benchmarking paper` = "Benchmark only",
                                     `New method development paper` = "Method development"
@@ -67,11 +72,11 @@ plot_barplot <- function( variable  = "Diversity.of.experimental.data" , title =
   p <- df_count  %>% 
     ggplot() +
     aes(x = as.factor( norm_year2), y = freq , fill = norm_year2) +
-    geom_col(alpha = 0.3) +
+    geom_col(alpha = 0.8) +
     labs(x = "Adjusted Year", y = "Proportion of papers",
          title =  title , color = "Adjusted Year") +
     facet_wrap(~Paper.category, scales = "free", ncol = 2) +
-    scale_fill_viridis(discrete = T, option = "C", begin = 0.2, end = 0.7) + 
+    scale_fill_viridis(discrete = T, option = "G", begin = 0.3, end = 0.8) + 
     theme_classic() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
   
   return(p)
@@ -136,13 +141,15 @@ p_website  <- plot_barplot( "Website"  , "Website" )
 
 p_synthetic <- df_numeric %>% 
   ggplot() +
-  aes(x = as.factor( norm_year2) , y = Number.of.synthetic.datasets, color = norm_year2) +
+  aes(x = as.factor( norm_year2) , y = Number.of.synthetic.datasets, color = norm_year2, 
+      fill = norm_year2) +
   geom_boxplot() +
   labs(x = "Adjusted Year", y = "Number (log10 scale)",
        title = "Number of synthetic datasets", color = "Adjusted Year") +
   facet_wrap(~Paper.category, scales = "free", ncol = 2) +
   scale_y_log10() +
-  scale_color_viridis(discrete = T, option = "C", begin = 0.2, end = 0.7) +
+  scale_colour_viridis(discrete = T, option = "G", begin = 0.3, end = 0.8) + 
+  scale_fill_viridis(discrete = T, option = "G", begin = 0.3, end = 0.8, alpha  = 0.4) + 
   theme_classic() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 
@@ -154,7 +161,8 @@ p_num_cell <- df_numeric %>%
        title = "Max number of cells", color = "Adjusted Year") +
   facet_wrap(~Paper.category, scales = "free", ncol = 2) +
   scale_y_log10() +
-  scale_color_viridis(discrete = T,  option = "C", begin = 0.2, end = 0.7) +
+  scale_colour_viridis(discrete = T, option = "G", begin = 0.3, end = 0.8) + 
+  scale_fill_viridis(discrete = T, option = "G", begin = 0.3, end = 0.8, alpha  = 0.4) + 
   theme_classic() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 

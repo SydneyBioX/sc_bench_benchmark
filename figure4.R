@@ -1,11 +1,22 @@
- 
+
 library(ggplot2)
 library(ggpubr)
 library(readr)
+library(plyr)
 
-theme_set( theme_classic())
+
+theme_set(theme_bw() +
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size = 1),
+                  axis.text.x = element_text(color = "black", angle = 45, hjust = 1),
+                  axis.text.y = element_text(color = "black")))
+
 
 data <- read_csv("data.csv")
+
+
+
 
 data_no_dup <- data[!duplicated(data$PMID), ]
 
@@ -15,9 +26,10 @@ plot_density <- function( mu,  column ){
   column <- sym(column)
   
   p <- ggplot(data_no_dup, aes(x = !!column )) + 
-    geom_density( aes(fill = `Paper.category` , colour =`Paper.category` ),  alpha = 0.1)  + 
+    geom_density( aes(  colour =`Paper.category` ),  alpha = 0.1)  + 
     scale_x_log10() + ylab("Distribution density") +
-    scale_fill_manual(values =  c(   "darkblue"  ,  "#E41A1C" ))+
+    
+    # scale_fill_manual(values =  c(   "darkblue"  ,  "#E41A1C" ))+
     scale_colour_manual(values =  c(   "darkblue"  ,  "#E41A1C" ))+
     geom_vline(data=mu, aes(xintercept=grp.mean, color=Paper.category), linetype="dashed")
   
@@ -31,7 +43,7 @@ plot_density <- function( mu,  column ){
 # Panel a
 ###################
 
- 
+
 
 mu <- ddply(data_no_dup, "Paper.category", summarise, grp.mean=median(Number.of.experimental.datasets, na.rm=T))
 a <- plot_density(mu, "Number.of.experimental.datasets") 
@@ -44,7 +56,7 @@ b<- plot_density(mu, "Number.of.synthetic.datasets")
 ggarrange(plotlist = list(  a,b) , align =  "v")
 
 
-
+ 
 
 ###################
 # Panel b
@@ -61,7 +73,7 @@ p_num_diversity_experimental  <- ggplot( data_no_dup_no_NA,
                                          aes( x = `Paper.category` , 
                                               fill =`Diversity.of.experimental.data`)) +
   geom_bar(position="fill",  na.rm = TRUE)  + 
-  scale_fill_manual(values =  c("steelblue" , "#E41A1C" , "lightgrey" )) + 
+  scale_fill_manual(values =  c( "darkblue" , "#E41A1C" , "lightgrey" )) + 
   ylab("Proportion of papers") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 
@@ -74,11 +86,13 @@ p_num_diversity_synthetic <- ggplot( data_no_dup_no_NA,
                                      aes(x = `Paper.category` , 
                                          fill =`Diversity.of.synthetic.datasets`)) +
   geom_bar(position = "fill", na.rm = TRUE)  + 
-  scale_fill_manual(values = c("steelblue" , "#E41A1C" , "lightgrey" ))+ 
+  scale_fill_manual(values = c( "darkblue" , "#E41A1C" , "lightgrey" ))+ 
   ylab("Proportion of papers") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 ggarrange(plotlist = list(  p_num_diversity_experimental  , p_num_diversity_synthetic))
 
+
+ 
 
 
 
@@ -132,6 +146,16 @@ synthetic_diversity <- gsub("different spread of ds genes" ,
 synthetic_diversity <- gsub("different long and short range interaction with different spatial distance.", 
                             "differential spatial distance"  ,synthetic_diversity)
 
+
+synthetic_diversity <- gsub("different tissue types", 
+                            "differential tissues"  ,synthetic_diversity)
+
+
+synthetic_diversity <- gsub("different gene counts", 
+                            "differential number of genes"  ,synthetic_diversity)
+
+
+
 synthetic_diversity <- data.frame( table( trimws(synthetic_diversity) )  )
 
 synthetic_diversity <- synthetic_diversity[order(synthetic_diversity$Freq , 
@@ -148,4 +172,5 @@ b <- ggplot(synthetic_diversity, aes(y = Var1, x = prop, fill = Var1)) +
 
 ggarrange(plotlist = list(  a,b) , align =  "v")
 
+ 
 

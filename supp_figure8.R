@@ -39,7 +39,6 @@ barplot_ggplot <- function( dataset , title   , xlab = "Dataset"   ){
 
 
 
-# created another excel on whether the paper reported criteria specific findings
 data <- read_excel("review of benchmarking - dataset specificity of common benchmarking papers.xlsx")
 
 
@@ -91,6 +90,8 @@ ggarrange( plotlist = list(p_batch , p_celltype , p_clustering , p_DE  ,
                            p_deconv, p_dimension ,  p_grn , p_imputation ) , 
            ncol = 2,  nrow = 4, 
            align = "h")
+
+
 
 
 

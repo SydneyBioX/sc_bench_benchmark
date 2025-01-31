@@ -1,18 +1,23 @@
 
 
- 
+
 library(ggplot2)
 library(scales)
 library(dplyr)
 library(ggrepel)
 
-theme_set(theme_classic())
- 
 
-# read in survey data 
+theme_set(theme_bw() +
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size = 1),
+                  axis.text.x = element_text(color = "black", angle = 45, hjust = 1),
+                  axis.text.y = element_text(color = "black")))
+
+ 
 data <- read_csv("data.csv")
 
- 
+
 # these are meta data of each paper
 meta <- data[, c( "PMID" , "Paper.title",  "finer_topic" ,  "broader_topic" ,  "Paper.category" ) ]
 
@@ -63,6 +68,7 @@ data_heatmap[ data_heatmap  == "Not sure"]  <- 0.5
 data_heatmap[ data_heatmap  == "Synthetic data"]  <- 0.5
 data_heatmap[ data_heatmap  == "Experimental data"]  <- 0.5
 data_heatmap[ data_heatmap  == "Both"]  <- 1
+
 data_heatmap$Use.both.synthetic.and.experimental <- data_heatmap$Types.of.data
 data_heatmap$Use.both.synthetic.and.experimental[data_heatmap$Use.both.synthetic.and.experimental == 0.5 ] <- 0
 
@@ -76,9 +82,7 @@ data_heatmap$Methods.compared <- rescale( data_heatmap$Methods.compared )
 
 
 data_heatmap <- data_heatmap %>%
-  mutate(across(-PMID, as.numeric))
-
-
+  dplyr::mutate(across(-PMID, as.numeric))
 
 
 
@@ -89,10 +93,9 @@ data_heatmap <- data_heatmap %>%
   dplyr::summarise(across(everything(), ~ mean(., na.rm = TRUE)))
 
 
-
 meta <- meta[ match(data_heatmap$PMID, meta$PMID), ]
 
- 
+
 # remove pmid
 data_heatmap <- data_heatmap[, -1]
 
@@ -121,10 +124,15 @@ this_type <- unique(meta$`Paper.category`)[1]
 
 for (this_type in unique(meta$`Paper.category`)){
   index <- which(meta$`Paper.category`== this_type)
+  
+  # note, because we have set na.rm to be true
+  # this means, columns like downstream is only calculated for the subset of papers not in the downstream broader topic
+  # and that, diversity of synthetic dataset only calculated for the subset of papers that looked at synthetic dataset 
   temp <- colMeans(data_heatmap[index, ], na.rm = T )
   temp <- data.frame(temp)
   temp$type_paper <- this_type
   temp$criteria <- rownames(temp)
+  
   
   temp$category[temp$criteria %in% c("Diversity.of.experimental.data" , 
                                      "Diversity.of.synthetic.datasets" , 
@@ -175,7 +183,7 @@ panel_b <- ggarrange(plotlist = score_plot, common.legend = T)
 
 
 panel_a <- ggplot(score_scatter, aes(x = temp.x ,  y = temp.y, 
-                          size = temp.x, label = criteria  )) +
+                                     size = temp.x, label = criteria  )) +
   geom_point(alpha = 0.4 , aes(colour = category.x) ) + 
   scale_colour_manual( values = col ) + 
   geom_vline(xintercept=0.25, linetype="dashed", size= 0.2) + 
@@ -190,6 +198,8 @@ panel_a <- ggplot(score_scatter, aes(x = temp.x ,  y = temp.y,
   xlab("Percentage in pure benchmarking paper")
 
 
-
 panel_a
+
 panel_b
+
+ 

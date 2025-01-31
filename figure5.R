@@ -6,12 +6,18 @@ library(viridis)
 library(readr)
 library(scales)
 
+theme_set(theme_bw() +
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size = 1),
+                  axis.text.x = element_text(color = "black", angle = 45, hjust = 1),
+                  axis.text.y = element_text(color = "black")))
 
-theme_set(theme_classic())
 
- 
 data <- read_csv("data.csv")
- 
+
+
+
 data$Paper.category[data$Paper.category == "New method development paper" ] <- "Method development" 
 data$Paper.category[data$Paper.category == "Pure benchmarking paper"] <- "Benchmark only" 
 
@@ -21,15 +27,16 @@ data$Paper.category <- factor( data$Paper.category , levels = c( "Benchmark only
 
 data <- data[ !duplicated(data$PMID), ]
 
- 
+
 ################
 # Panel a
 ##############
 
 data$category_year <- as.character( data$year )
-data[ data$category_year  <= 2019 , ]$category_year <- "<2019"
-data[ data$category_year  %in% c( 2020, 2021) , ]$category_year <- "2020-2021"
-data[ data$category_year  %in% c( 2022, 2023) , ]$category_year <- "2022-2023"
+data[ data$category_year  <= 2018 , ]$category_year <- "<2018"
+data[ data$category_year  %in% c( 2019, 2020) , ]$category_year <- "2019-2020"
+data[ data$category_year  %in% c( 2021, 2022) , ]$category_year <- "2021-2022"
+data[ data$category_year  %in% c( 2023, 2024) , ]$category_year <- "2023-2024"
 
 
 ggplot(data ,   aes(x = norm_year2, fill=as.numeric(as.factor(norm_year2) ))) +
@@ -37,9 +44,8 @@ ggplot(data ,   aes(x = norm_year2, fill=as.numeric(as.factor(norm_year2) ))) +
   labs(x = "Adjusted Year", y = "Number",
        title = "Number of papers by adjusted year") + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))+
-  facet_wrap( ~Paper.category+ category_year)+ 
+  facet_wrap( ~Paper.category+ category_year, ncol = 4)+ 
   scale_fill_viridis(option = "C", begin = 0.2, end = 0.7)
-
 
 
 
@@ -95,7 +101,7 @@ column_of_interest <- c(
 
 
 
-
+df_numeric <- data
 df_numeric <- df_numeric[ , -c( which( colnames( df_numeric) == "Timestamp")) ]
 df_numeric <- as.data.frame(df_numeric)
 
@@ -113,7 +119,7 @@ df_numeric[ df_numeric  == "Both"]  <- 1
 
 
 
-data_heatmap <- df_numeric[, c( column_of_interest , "PMID") ]
+data_heatmap <- df_numeric[, c( column_of_interest  ,"PMID" ) ]
 data_heatmap  <- as.data.frame(data_heatmap )
 data_heatmap[is.na(data_heatmap)] <- 0 
 
@@ -159,26 +165,23 @@ ggplot(sum_score, aes( y = score  ,  x =  year ,
 
 
 
-
-
-
 ################
 # Panel c
 ##############
 
 
-
 df_numeric <- data
-df_numeric_rm_outlier <- df_numeric[ which( df_numeric$Methods.compared < 25), ]
-df_numeric_rm_outlier   %>% 
+# df_numeric_rm_outlier <- df_numeric[ which( df_numeric$Methods.compared < 25), ]
+df_numeric    %>% 
   ggplot() +
-  aes(x = as.factor(norm_year2) , y = Methods.compared, color = norm_year2) +
+  aes(x = as.factor(norm_year2) , y = log10(Methods.compared), color = norm_year2) +
   geom_boxplot() +
   labs(x = "Adjusted Year", y = "Number",
        title = "Number of methods", color = "Adjusted Year") +
   facet_wrap(~Paper.category, scales = "free" )+ 
   scale_colour_viridis(discrete = T, option = "C", begin = 0.2, end = 0.7)+ 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
+
 
 
 
@@ -188,7 +191,7 @@ df_numeric_rm_outlier   %>%
 
 
 
-df_numeric_rm_outlier    %>% 
+df_numeric     %>% 
   ggplot() +
   aes(x = as.factor(norm_year2) , y = Number.of.experimental.datasets , color = norm_year2) +
   geom_boxplot() +
@@ -197,6 +200,7 @@ df_numeric_rm_outlier    %>%
   facet_wrap(~Paper.category, scales = "free" )+ 
   scale_colour_viridis(discrete = T, option = "C", begin = 0.2, end = 0.7) + scale_y_log10() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
 
 
 
@@ -215,17 +219,34 @@ num_more_method <- data.frame(num_more_method = num_more_method,
 
 num_more_method <- num_more_method[ !is.na( num_more_method$num_in_biorxiv) ,  ]
 
-num_more_method <- num_more_method[ num_more_method$num_in_published < 25, ]
-num_more_method  %>%
-  dplyr::group_by(paper_category) %>%
-  dplyr::summarise(proportion = mean(num_more_method > 0, na.rm = TRUE))
+# num_more_method <- num_more_method[ num_more_method$num_in_published < 25, ]
 
-ggplot( num_more_method , aes(x =    num_in_biorxiv , y =     num_in_published ) ) +
-  geom_jitter(aes(colour =  num_in_published) , width = 0, height = 0.2,
-              size = 3 , 
-              alpha = 0.3) + 
+ggplot( num_more_method , aes(x =    log(num_in_biorxiv+1) , y =     log(num_in_published +1) ) ) +
+  geom_point(aes(colour =  log(num_in_published+1)) , width = 0, height = 0.2,
+             size = 3 , 
+             alpha = 0.3) + 
   facet_wrap( ~paper_category, scales = "free") + 
   labs(x = "Number of biorxiv", y = "Number in published" )  + 
-  geom_abline(intercept = 0, slope = 1, size = 0.5) + scale_colour_continuous( high = "red" , low = "blue")  
+  geom_abline(intercept = 0, slope = 1, size = 0.5) + scale_colour_continuous( high = "red" , low = "blue") +
+  ylim(0, 5 ) + xlim(0, 5)
 
+
+
+
+
+
+#calculate proportion of paper that's more
+
+library(tidyr)
+result <- num_more_method %>%
+  dplyr::group_by(paper_category) %>%
+  dplyr::summarize(percentage_increase = mean(num_in_published > num_in_biorxiv, na.rm = TRUE),
+                   percentage_same = mean(num_in_published <= num_in_biorxiv, na.rm = TRUE) )
+
+# result 
+# 
+# paper_category     percentage_increase percentage_same
+# <fct>                            <dbl>           <dbl>
+# 1 Benchmark only                   0.391           0.609
+# 2 Method development               0.494           0.506
 

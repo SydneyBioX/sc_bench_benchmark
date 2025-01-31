@@ -1,29 +1,37 @@
- 
+
 library(ggplot2)
 library(ggpubr)
 library(readr)
 library(plyr)
 library(caret)
 
-theme_set(theme_classic() +
-            theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-            theme(panel.border = element_rect(color = "black", fill = NA)))
-
-
+theme_set(theme_bw() +
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size = 1),
+                  axis.text.x = element_text(color = "black", angle = 45, hjust = 1),
+                  axis.text.y = element_text(color = "black")))
 
 data <- read_csv("data.csv")
+
+
 
 data_no_dup <- data
 data_no_dup <- data[!duplicated(data$`Paper.title`), ]
 
+table( data_no_dup$Paper.category  )
+
+data_no_dup$Paper.category [ data_no_dup$Paper.category == "Pure benchmarking paper"] <- "Benchmark only"
+data_no_dup$Paper.category [ data_no_dup$Paper.category == "New method development paper"] <- "Method development"
+data_no_dup$Paper.category <- factor(data_no_dup$Paper.category)
 
 
 plot_barplot <- function( column ){
   column <- sym(column)
   
   p <- data_no_dup %>% 
-           drop_na(!!column) %>% ggplot(  
-               aes(x = !!column  , fill = !!column )) + 
+    drop_na(!!column) %>% ggplot(  
+      aes(x = !!column  , fill = !!column )) + 
     geom_bar(position = "dodge" )    +
     facet_wrap(~`Paper.category`)+ 
     ylab("Number of papers")+
@@ -55,18 +63,24 @@ plot_density <- function( mu,  column ){
 ###################
 # Data 
 ###################
- 
- 
-plot_barplot( "Types.of.data")
+
+
+data_type <- plot_barplot( "Types.of.data")
 
 
 mu <- ddply(data_no_dup, "Paper.category", summarise, grp.mean=median(Number.of.experimental.datasets, na.rm=T))
-plot_density(mu, "Number.of.experimental.datasets") 
+num_exp <- plot_density(mu, "Number.of.experimental.datasets") 
 
 
 mu <- ddply(data_no_dup, "Paper.category", summarise, grp.mean=median(Number.of.synthetic.datasets, na.rm=T))
-plot_density(mu, "Number.of.synthetic.datasets") 
- 
+num_syn <- plot_density(mu, "Number.of.synthetic.datasets") 
+
+
+
+data <- ggarrange(plotlist = list(  data_type,  num_exp, num_syn ), ncol = 3)
+
+
+
 
 
 ###################
@@ -75,12 +89,16 @@ plot_density(mu, "Number.of.synthetic.datasets")
 
 
 data_no_dup$Selection.criteria <- factor(data_no_dup$Selection.criteria , levels = c("Yes", "No" , "Not sure"))
-plot_barplot( "Selection.criteria")
+selection <- plot_barplot( "Selection.criteria")
 
 
 
 mu <- ddply(data_no_dup, "Paper.category", summarise, grp.mean=median(Methods.compared, na.rm=T))
-plot_density(mu, "Methods.compared") 
+method_com <- plot_density(mu, "Methods.compared") 
+
+method <- ggarrange(plotlist = list( selection, method_com), ncol = 2)
+
+
 
 
 
@@ -92,11 +110,16 @@ plot_density(mu, "Methods.compared")
 
 data_no_dup$Variability.of.score <- factor( data_no_dup$Variability.of.score, 
                                             levels = c("Yes", "No" , "Not sure"))
-plot_barplot( "Variability.of.score")
+variability <- plot_barplot( "Variability.of.score")
 
 data_no_dup$Overall.comparison <- factor( data_no_dup$Overall.comparison, 
                                           levels = c("Yes", "No" , "Not sure"))
-plot_barplot( "Overall.comparison")
+overall <- plot_barplot( "Overall.comparison")
+
+
+accuracy <- ggarrange(plotlist = list( variability  ,overall  ), ncol = 2)
+
+
 
 
 ###################
@@ -106,31 +129,34 @@ plot_barplot( "Overall.comparison")
 
 data_no_dup$Sensitivity.analysis <- factor( data_no_dup$Sensitivity.analysis,  
                                             levels = c("Yes", "No"))
-plot_barplot( "Sensitivity.analysis")
+sensitivity <- plot_barplot( "Sensitivity.analysis")
 
 
 
 data_no_dup$Tuning <- factor(data_no_dup$Tuning,   levels = c("Parameter tuning", "Default setting"))
-plot_barplot( "Tuning")
+tuning <- plot_barplot( "Tuning")
 
- 
+stability  <- ggarrange(plotlist = list( sensitivity , tuning  ), ncol = 2)
+
+
+
 
 ###################
 # Scalability
 ###################
- 
+
 
 data_no_dup$Speed.measured. <- factor(data_no_dup$Speed.measured.,  levels = c("Yes", "No")) 
-plot_barplot( "Speed.measured.")
+speed <- plot_barplot( "Speed.measured.")
 
- 
+
 data_no_dup$Memory.measured <- factor(data_no_dup$Memory.measured,  levels = c("Yes", "No")) 
-plot_barplot( "Memory.measured")
+memory <- plot_barplot( "Memory.measured")
 
- 
+
 
 mu <- ddply(data_no_dup, "Paper.category", summarise, grp.mean=median(as.numeric( Max.number.of.cells ), na.rm=T))
-plot_density(mu, "Max.number.of.cells") 
+max_num_cell <- plot_density(mu, "Max.number.of.cells") 
 
 
 
@@ -150,12 +176,15 @@ colnames(plotTable) <- c("Speed", "Memory" , "Freq", "goodbad" , "prop")
 plotTable$Speed <- factor(plotTable$Speed, levels = c( "Yes" , "No" ))
 plotTable$Memory <- factor(plotTable$Memory, levels = c("No" , "Yes"))
 
-ggplot(data = plotTable, mapping = aes(x = Speed, y = Memory, fill = goodbad, alpha = prop)) +
+confusion <- ggplot(data = plotTable, mapping = aes(x = Speed, y = Memory, fill = goodbad, alpha = prop)) +
   geom_tile() +
   geom_text(aes(label = Freq), vjust = .5, fontface  = "bold", alpha = 1) +
   scale_fill_manual(values = c(good = "blue", bad = "red")) +
   theme_bw() +
   xlim(rev(levels(table$Reference))) + ylab("Measured memory") + xlab("Measured speed")
+
+
+scalability  <- ggarrange(plotlist = list( speed, memory, max_num_cell, confusion ), ncol = 4)
 
 
 
@@ -168,7 +197,7 @@ ggplot(data = plotTable, mapping = aes(x = Speed, y = Memory, fill = goodbad, al
 data_no_dup[ data_no_dup$broader_topic  == "Downstream analysis", ]$Downstream.analysis <- NA
 
 data_no_dup$Downstream.analysis <- factor(data_no_dup$Downstream.analysis , levels= c("Yes" , "No" , "Not sure"))
-plot_barplot( "Downstream.analysis")
+downstream <- plot_barplot( "Downstream.analysis")
 
 
 
@@ -179,17 +208,21 @@ plot_barplot( "Downstream.analysis")
 
 data_no_dup$Prior.knowledge <-  factor(data_no_dup$Prior.knowledge, 
                                        levels = c("Yes" , "No" , "Not sure")    )
-plot_barplot( "Prior.knowledge")
+prior <- plot_barplot( "Prior.knowledge")
 
 
 data_no_dup$Discovery. <-  factor(data_no_dup$Discovery. , 
                                   levels = c("Yes" , "No" , "Not sure")    ) 
- 
-plot_barplot( "Discovery.")
+
+discovery <- plot_barplot( "Discovery.")
 
 data_no_dup$Wet.lab.validation <-  factor(data_no_dup$Wet.lab.validation , 
                                           levels = c("Yes" , "No" , "Not sure")    ) 
-plot_barplot( "Wet.lab.validation")
+weblab <- plot_barplot( "Wet.lab.validation")
+
+context <- ggarrange(plotlist = list(prior,discovery , weblab), ncol = 3)
+
+
 
 
 ###################
@@ -198,25 +231,28 @@ plot_barplot( "Wet.lab.validation")
 
 data_no_dup$Recommendation <- factor(data_no_dup$Recommendation, 
                                      levels = c("Yes" , "No" , "Not sure")    )
-plot_barplot( "Recommendation")
+rec <- plot_barplot( "Recommendation")
 
 
 
 data_no_dup$Applicability <- factor(data_no_dup$Applicability, 
                                     levels = c("Yes" , "No" , "Not sure")    )
-plot_barplot( "Applicability")
+applica <- plot_barplot( "Applicability")
 
 
 data_no_dup$Trade.offs <- factor(data_no_dup$Trade.offs, 
                                  levels = c("Yes" , "No" , "Not sure")    )
-plot_barplot( "Trade.offs")
+tradeoff <- plot_barplot( "Trade.offs")
 
- 
+
 data_no_dup$Future.directions <- factor(data_no_dup$Future.directions, 
                                         levels = c("Yes" , "No" , "Not sure")    )
- 
-plot_barplot( "Future.directions")
 
+future <- plot_barplot( "Future.directions")
+
+
+
+communication <- ggarrange(plotlist = list( rec, applica, tradeoff, future), ncol = 4 )
 
 
 
@@ -225,14 +261,14 @@ plot_barplot( "Future.directions")
 ###################
 
 data_no_dup$Website <- factor(data_no_dup$Website , levels = c("Yes" , "No"))
-plot_barplot( "Website")
+website <- plot_barplot( "Website")
 
 data_no_dup$Package.availability <- factor(data_no_dup$Package.availability , levels = c("Yes" , "No"))
-plot_barplot( "Package.availability")
+package_avail <- plot_barplot( "Package.availability")
 
 data_no_dup$`Data.availability` <- factor(data_no_dup$`Data.availability` , levels = c("Yes" , "No"))
-plot_barplot( "Data.availability")
+data_avail <- plot_barplot( "Data.availability")
 
 
-
+software <- ggarrange(plotlist = list( website, package_avail , data_avail), ncol =3 )
 
