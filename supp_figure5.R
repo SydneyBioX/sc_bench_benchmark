@@ -263,12 +263,12 @@ communication <- ggarrange(plotlist = list( rec, applica, tradeoff, future), nco
 data_no_dup$Website <- factor(data_no_dup$Website , levels = c("Yes" , "No"))
 website <- plot_barplot( "Website")
 
-data_no_dup$Package.availability <- factor(data_no_dup$Package.availability , levels = c("Yes" , "No"))
-package_avail <- plot_barplot( "Package.availability")
+data_no_dup$Code.availability <- factor(data_no_dup$Code.availability , levels = c("Yes" , "No"))
+code_avail <- plot_barplot( "Code.availability")
 
 data_no_dup$`Data.availability` <- factor(data_no_dup$`Data.availability` , levels = c("Yes" , "No"))
 data_avail <- plot_barplot( "Data.availability")
 
 
-software <- ggarrange(plotlist = list( website, package_avail , data_avail), ncol =3 )
+software <- ggarrange(plotlist = list( website, code_avail , data_avail), ncol =3 )
 

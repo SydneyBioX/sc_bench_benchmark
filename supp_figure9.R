@@ -133,7 +133,7 @@ p_future_direction <- plot_barplot("Future.directions"  , "Future direction")
 
 p_data_available <-   plot_barplot("Data.availability" , "Data availability" )
 
-p_package_available <- plot_barplot("Package.availability" , "Package availability")
+p_code_available <- plot_barplot("Code.availability" , "Code availability")
 
 p_website  <- plot_barplot( "Website"  , "Website" )
 
@@ -184,7 +184,7 @@ ggarrange(plotlist =  list( p_synthetic ,
                             
                             p_recommendation , p_applicability , p_trade_off , p_future_direction , 
                             
-                            p_data_available ,   p_package_available ,   p_website  ),
+                            p_data_available ,   p_code_available ,   p_website  ),
           ncol = 4, nrow  = 6,  common.legend = T)
 
 

@@ -34,7 +34,7 @@ categorical_columns <- c(
   "Wet.lab.validation", 
   "Website", 
   "Data.availability", 
-  "Package.availability", 
+  "Code.availability", 
   "Prior.knowledge"  ,
   "Types.of.data"   , 
   "Number.of.experimental.datasets", 
@@ -145,7 +145,7 @@ for (this_type in unique(meta$`Paper.category`)){
   temp$category[temp$criteria %in% c("Downstream.analysis")] <- "Downstream"
   temp$category[temp$criteria %in% c("Wet.lab.validation" ,"Discovery." , "Prior.knowledge")] <- "Context specific discovery"  
   temp$category[temp$criteria %in% c("Trade.offs" , "Applicability" , "Future.directions" , "Recommendation" )] <- "Communication"
-  temp$category[temp$criteria %in% c("Package.availability" , 
+  temp$category[temp$criteria %in% c("Code.availability" , 
                                      "Data.availability" , 
                                      "Website" )] <- "Software"
   

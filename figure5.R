@@ -71,7 +71,7 @@ column_of_interest <- c(
   
   "Website", 
   "Data.availability", 
-  "Package.availability", 
+  "Code.availability", 
   "Prior.knowledge"  ,
   
   "Types.of.data"   , 
