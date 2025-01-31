@@ -1,6 +1,6 @@
 # The current landscape and emerging challenges of benchmarking single-cell methods
 
-In this study, we conducted a systematic literature search and assessed 245 papers, including all 95 benchmark-only papers from the search and an additional 150 method development papers containing benchmarking.
+In this study, we conducted a systematic literature search and assessed 282 papers, including all 130 benchmark-only papers from the search and an additional 152 method development papers containing benchmarking.
 
 The "data.csv" is the anonymous survey response that contains information on each of the 245 papers. To visualise our result, please go to our [webpage](https://shiny.maths.usyd.edu.au/sc_bench_benchmark/).
 
