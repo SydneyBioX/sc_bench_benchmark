@@ -2,7 +2,7 @@
 
 In this study, we conducted a systematic literature search and assessed 282 papers, including all 130 benchmark-only papers from the search and an additional 152 method development papers containing benchmarking.
 
-The "data.csv" is the anonymous survey response that contains information on each of the 245 papers. To visualise our result, please go to our [webpage](https://shiny.maths.usyd.edu.au/sc_bench_benchmark/).
+The "data.csv" is the anonymous survey response that contains information on each of the 245 papers. To visualise our result, please go to our [webpage (Shiny Dashboard)](https://shiny.maths.usyd.edu.au/sc_bench_benchmark/) or [webpage (JavaScript Dashboard)](https://sydneybiox.github.io/sc_bench_benchmark_dashboard/#paper). 
 
 To contribute to our study, please submit this [form](https://docs.google.com/forms/d/12nQKGxNnwCsomzUrRi6J1nNrpQ3wffJElaIMqPiaSiE/viewform?edit_requested=true)
 
