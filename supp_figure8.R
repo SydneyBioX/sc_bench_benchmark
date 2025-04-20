@@ -36,67 +36,128 @@ barplot_ggplot <- function( dataset , title   , xlab = "Dataset"   ){
 
 
 
+df <- data.frame()
 
 
-
-data <- read_excel("review of benchmarking - dataset specificity of common benchmarking papers.xlsx")
+# created another excel on whether the paper reported criteria specific findings
+data <- read_excel("review of benchmarking - dataset specificity of common benchmarking papers_Dec2024.xlsx")
 
 
 data <- split(  data$Critiera , data$Topic )
 criteria  <- unlist ( strsplit(data$`Batch correction` , ";"))
-criteria <- trimws(criteria)
-p_batch <- barplot_ggplot(criteria , "Batch correction"  , "Criteria")
+criteria <-  tolower( trimws(criteria) )  
+
+temp <-  data.frame( table(table(criteria)))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <- "Batch correction"
+df <- rbind(df,  temp) 
+
+ 
 
 
 criteria  <- unlist( strsplit ( data$`Celltype annotation` ,";"))
-criteria <- trimws(criteria)
-p_celltype <- barplot_ggplot(criteria  , "Celltype/state identification"  , "Criteria")
+criteria <-tolower( trimws(criteria) ) 
+ 
+temp <-  data.frame( table(table(criteria)))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <- "Celltype annotation"
+df <- rbind(df,  temp) 
+ 
+
 
 
 criteria <- unlist( strsplit ( data$Clustering ,";"))
-criteria <- trimws(criteria)
-p_clustering <- barplot_ggplot(criteria, "Clustering"  , "Criteria")
+criteria <-tolower( trimws(criteria) ) 
+ 
+temp <-  data.frame( table(table(criteria)))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <- "Clustering"
+df <- rbind(df,  temp) 
+ 
+
+
 
 
 criteria  <- unlist(strsplit( data$DE , ";"))
-criteria <- trimws(criteria)
-p_DE <- barplot_ggplot(criteria , "Differential expression"  , "Criteria")
+criteria <-tolower( trimws(criteria) ) 
+ 
+temp <-  data.frame( table(table(criteria )))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <- "Differential expression"
+df <- rbind(df,  temp) 
 
-
+ 
 
 criteria <- unlist(strsplit( data$Deconvolution , ";"))
-criteria <- trimws(criteria)
-p_deconv <- barplot_ggplot(criteria , "Deconvolution"  , "Criteria" )
+criteria <-tolower( trimws(criteria) ) 
+ 
+temp <-  data.frame( table(table(criteria )))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <- "Deconvolution"
+df <- rbind(df,  temp) 
 
+ 
 
 
 criteria  <- unlist(strsplit( data$`Dimension reduction`, ";")) 
-criteria <- trimws(criteria)
-p_dimension <- barplot_ggplot( criteria , "Dimension reduction"  , "Criteria" )
+criteria <- tolower( trimws(criteria) ) 
+ 
+temp <-  data.frame( table(table(criteria)))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <- "Dimension reduction"
+df <- rbind(df,  temp) 
+ 
+
 
 
 criteria <- unlist(strsplit( data$GRN, ";")) 
-criteria <- trimws(criteria )
-p_grn <- barplot_ggplot( criteria, "Gene regulatory network" , "Criteria" )
+criteria <- tolower(trimws(criteria ) ) 
+
+temp <-  data.frame( table(table(criteria)))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <-  "Gene regulatory network"
+df <- rbind(df,  temp) 
+
+ 
 
 
 criteria <- unlist(strsplit( data$Imputation, ";")) 
-criteria <- trimws(criteria )
-p_imputation <- barplot_ggplot(criteria , "Imputation" , "Criteria" )
+criteria <- tolower( trimws(criteria ) ) 
+ 
+temp <-  data.frame( table(table(criteria)))
+temp$Var1 <- as.numeric(as.character( temp$Var1) )
+temp$topic <-  "Imputation"
+df <- rbind(df,  temp) 
+
+ 
+ 
+
+
+total <- df %>%  dplyr::group_by(topic) %>% 
+  dplyr::summarise(total = sum( Freq))
+
+total$type <- "total"
+
+colnames( total ) <- c("topic",  "Number of papers", "Frequency")
+
+total <- total[order(total$`Number of papers`, decreasing = F), ]
+
+colnames(df)  <- c("Frequency" , "Number of papers", "topic")
 
 
 
-ggarrange( plotlist = list(p_batch , p_celltype , p_clustering , p_DE  , 
-                           p_deconv, p_dimension ,  p_grn , p_imputation ) , 
-           ncol = 2,  nrow = 4, 
-           align = "h")
+df <- rbind(df, total)
+
+df 
 
 
+df$topic <- factor(df$topic, levels = c( total$topic ))
 
-
-
-
-
+ggplot(df , aes(Frequency, topic)) +
+  geom_tile(aes(fill = `Number of papers`)) +
+  geom_text(aes(label = `Number of papers`)) +
+  scale_fill_gradient(low = "white", high = "steelblue")
+ 
 
 
 

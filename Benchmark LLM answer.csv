@@ -1,0 +1,101 @@
+"Paper","PMID","Number of methods compared","Data type","Number of experimental data","Number of synthetic data","Method selection criteria","Variability of score","Overall comparison","Speed measured","Memory measured","Max number of cells"
+"spicyR: spatial analysis of in situ cytometry data in R",35438129,1,"Both","3","1000","No","Yes","No","Yes","No",1000
+"Benchmarking UMI-based single-cell RNA-seq preprocessing workflows",34906205,10,"Experimental","7","0","Yes","Yes","Yes","Yes","Yes",10000
+"Benchmarking single cell RNA-sequencing analysis pipelines using mixture control experiments",31133762,27,"Both","14","7","Yes","Yes","Yes","Yes","No",4000
+"Interactive analysis of single-cell epigenomic landscapes with ChromSCape",33177523,5,"Both","6","1","Yes","No","Yes","No","No",25000
+"pipeComp, a general framework for the evaluation of computational pipelines, reveals performant single cell RNA-seq preprocessing tools",32873325,19,"Both","7","2","Yes","Yes","Yes","Yes","No",6498
+"A multicenter study benchmarking single-cell RNA sequencing technologies using reference samples",33349700,25,"Experimental","20","0","Yes","Yes","Yes","Yes","No",30693
+"The Current State of Single-Cell Proteomics Data Analysis",36633424,27,"Both","14","2","Yes","Yes","Yes","Yes","No",4000
+"Assessment of computational methods for the analysis of single-cell ATAC-seq data",31739806,10,"Both","3","10","Yes","Yes","Yes","Yes","Yes",80000
+"EpiScanpy: integrated single-cell epigenomic analysis",34471111,2,"Both","4","18","Yes","Yes","Yes","Yes","Yes",81173
+"TIST: Transcriptome and Histopathological Image Integrative Analysis for Spatial Transcriptomics",36549467,7,"Both","4","18","Yes","Yes","Yes","Yes","Yes",80000
+"Comparison of high-throughput single-cell RNA sequencing data processing pipelines",34020539,7,"Both","8","3","Yes","Yes","Yes","Yes","Yes",10000
+"Destin2: Integrative and cross-modality analysis of single-cell chromatin accessibility data",36873935,7,"Both","4","3","Yes","Yes","Yes","Yes","Yes",80000
+"A systematic evaluation of single cell RNA-seq analysis pipelines",31604912,29,"Both","3","18","Yes","Yes","Yes","Yes","Yes",600000000
+"histocat: analysis of cell phenotypes and interactions in multiplex image cytometry data",28783155,0,"Experimental","58","0","No","Yes","No","No","No",80000
+"Giotto: a toolbox for integrative analysis and visualization of spatial expression data",33685491,4,"Both","10",NA,"No","Yes","No","Yes","No",160000
+"TISCH: a comprehensive web resource enabling interactive single-cell transcriptome visualization of tumor microenvironment",33179754,0,"Experimental","79","0","No","No","No","No","No",200000
+"Cumulus provides cloud-based data analysis for large-scale single-cell and single-nucleus RNA-seq",32719530,7,"Experimental","1","0","No","No","No","Yes","Yes",1300000
+"A multi-center cross-platform single-cell RNA sequencing reference dataset",33531477,22,"Experimental","20","0","Yes","Yes","Yes","No","No",10353
+"Joint cell segmentation and cell type annotation for spatial transcriptomics",34057817,10,"Both","3","18","Yes","Yes","Yes","Yes","Yes",81173
+"Cellpose: a generalist algorithm for cellular segmentation",33318659,2,"Both","8","10","Yes","Yes","Yes","Yes","Yes",172
+"Cell segmentation in imaging-based spatial transcriptomics",34650268,3,"Both","9","Not explicitly stated","No","Yes","Yes","Yes","No",10000
+"Perspectives for the reconstruction of 3D chromatin conformation using single cell Hi-C data",34793453,3,"Both","11","5","No","Yes","Yes","No","No",44
+"SnapHiC: a computational pipeline to identify chromatin loops from single-cell Hi-C data",34446921,4,"Both","2",NA,"No","Yes","No","No","No",2869
+"High-throughput single-cell RNA-seq data imputation and characterization with surrogate-assisted automated deep learning",34553763,2,"Both","11","88","No","Yes","Yes","Yes","No",48266
+"Spatially informed clustering, integration, and deconvolution of spatial transcriptomics with GraphST",36859400,5,"Both","9","2","No","Yes","Yes","Yes","No",100000
+"Joint dimension reduction and clustering analysis of single-cell RNA-seq and spatial transcriptomics data",35349708,4,"Both","16","100","No","Yes","Yes","Yes","No",100000
+"scGNN is a novel graph neural network framework for single-cell RNA-Seq analyses",33767197,11,"Both","4","2","No","Yes","Yes","Yes","No",13214
+"Choice of pre-processing pipeline influences clustering quality of scRNA-seq datasets",34521337,2,"Experimental","22","0","Yes","No","No","Yes","No",6769
+"Comparative analysis of common alignment tools for single-cell RNA sequencing",35084033,5,"Experimental","4","0","Yes","Yes","Yes","Yes","No",10000
+"Evaluation of STAR and Kallisto on Single Cell RNA-Seq Data Alignment",32220951,3,"Experimental","3","0","Yes","Yes","Yes","Yes","Yes",8640
+"Mapping molecular assemblies with fluorescence microscopy and object-based spatial statistics",29449608,3,"Both","2","6","No","Yes","No","Yes","No",45000
+"Influence of Cell-type Ratio on Spatially Resolved Single-cell Transcriptomes using the Tangram Algorithm: Based on Implementation on Single-Cell and MxIF Data",37324550,0,"Both","1","6","No","Yes","No","No","No",3725
+"scAB detects multiresolution cell states with clinical significance by integrating single-cell genomics and bulk sequencing data",36440766,2,"Both","10","6","Yes","Yes","Yes","No","No",8853
+"Spatial-ID: a cell typing method for spatially resolved transcriptomics via transfer learning and spatial embedding",36496406,8,"Both","Multiple","Not explicitly stated","No","Yes","Yes","Yes","Yes",213192
+"Latent cellular analysis robustly reveals subtle diversity in large-scale single-cell RNA-seq data",31566233,14,"Both","4","33300","Yes","No","Yes","Yes","Yes",2000000
+"Learning Cell Annotation under Multiple Reference Datasets by Multisource Domain Adaptation",36579851,4,"Experimental","8","0","Yes","Yes","Yes","No","No",8853
+"scMAGIC: accurately annotating single cells using two rounds of reference-based classification",34986249,13,"Both","14","33300","Yes","Yes","Yes","Yes","Yes",2000000
+"A multiresolution framework to characterize single-cell state landscapes",33106496,3,"Both","9","33300","Yes","Yes","Yes","Yes","No",2000000
+"scGCN is a graph convolutional networks algorithm for knowledge transfer in single cell omics",34158507,4,"Experimental","10","0","No","Yes","Yes","Yes","Yes",1000000
+"scClassify: sample size estimation and multiscale classification of cells using single and multiple reference",32567229,15,"Both","16","20","No","Yes","Yes","Yes","Yes",96404
+"Evaluation of Cell Type Annotation R Packages on Single-cell RNA-seq Data",33359678,10,"Both","8","41","Yes","Yes","Yes","Yes","Yes",50000
+"A comparison of automatic cell identification methods for single-cell RNA sequencing data",31500660,22,"Experimental","27","0","Yes","Yes","Yes","Yes","No",65943
+"Adversarial dense graph convolutional networks for single-cell classification",36661313,9,"Experimental","6","0","Yes","Yes","Yes","Yes","No",65943
+"Benchmarking automated cell type annotation tools for single-cell ATAC-seq data",36583014,5,"Experimental","5","0","Yes","Yes","Yes","Yes","Yes",70000
+"CHETAH: a selective, hierarchical cell type identification method for single-cell RNA sequencing",31226206,3,"Both","4","20","No","Yes","Yes","Yes","Yes",50000
+"Evaluation of single-cell classifiers for single-cell RNA sequencing data sets",31675098,9,"Both","3","46","Yes","Yes","Yes","Yes","Yes",90000
+"scPred: accurate supervised method for cell-type classification from single-cell RNA-seq data",31829268,2,"Both","27","20","No","Yes","Yes","Yes","Yes",68000
+"Supervised classification enables rapid annotation of cell atlases",31501545,2,"Experimental","5","0","No","Yes","Yes","Yes","No",94571
+"A Systematic Evaluation of Supervised Machine Learning Algorithms for Cell Phenotype Classification Using Single-Cell RNA Sequencing Data",35281805,13,"Both","43","3","Yes","Yes","Yes","Yes","No",37464
+"ChrNet: A re-trainable chromosome-based 1D convolutional neural network for predicting immune cell types",33932523,5,"Experimental","3","0","Yes","Yes","Yes","No","No",40000
+"scCATCH: Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data",32062421,6,"Both","6","20","Yes","Yes","Yes","Yes","Yes",50000
+"Cross-species cell-type assignment from single-cell RNA-seq data by a heterogeneous graph neural network",36526433,6,"Experimental","54","0","Yes","Yes","Yes","Yes","No",1000000
+"Evaluation of some aspects in supervised cell type identification for single-cell RNA-seq: classifier, feature selection, and reference construction",34503564,9,"Both","6","20","Yes","Yes","Yes","Yes","Yes",30000
+"Identifying phenotype-associated subpopulations by integrating bulk and single-cell sequencing data",34764492,2,"Both","10","2","No","No","No","Yes","Yes",30000
+"CellFishing.jl: an ultrafast and scalable cell search method for single-cell RNA sequencing",30744683,1,"Experimental","5","0","No","Yes","Yes","Yes","Yes",1300000
+"Evaluation of methods to assign cell type labels to cell clusters from single-cell RNA-sequencing data",31508207,5,"Experimental","5","0","Yes","Yes","Yes","Yes","No",68000
+"Evaluation of machine learning approaches for cell-type identification from single-cell transcriptomics data",33611343,10,"Experimental","20","0","Yes","Yes","Yes","Yes","No",54000
+"Integrating multiple references for single-cell assignment",34037791,3,"Experimental","27","0","Yes","Yes","Yes","Yes","No",68000
+"scGAD: a new task and end-to-end framework for generalized cell type annotation and discovery",36869836,7,"Both","20","3","No","No","Yes","Yes","No",110704
+"Learning for single-cell assignment",33127686,3,"Both","30","0","Yes","No","Yes","No","No",68000
+"CIDR: Ultrafast and accurate clustering through imputation for single-cell RNA-seq data",28351406,4,"Both","3","2","No","No","No","Yes","No",10000
+"Benchmarking clustering algorithms on estimating the number of cell types from single-cell RNA-sequencing data",35135612,14,"Experimental","2","0","Yes","Yes","Yes","Yes","Yes",10000
+"ClusterMap for multi-scale clustering analysis of spatial gene expression",34625546,1,"Both","5","5","No","No","No","No","No",24590
+"Secuer: Ultrafast, scalable and accurate clustering of single-cell RNA-seq data",36469543,3,"Both","15","31","Yes","Yes","No","Yes","Yes",40000000
+"Comparison of clustering tools in R for medium-sized 10x Genomics single-cell RNA-sequencing data",30228881,12,"Experimental","6","0","Yes","Yes","Yes","Yes","No",8381
+"A comparison framework and guideline of clustering methods for mass cytometry data",31870419,9,"Experimental","6","0","Yes","Yes","Yes","Yes","No",80000
+"A systematic performance evaluation of clustering methods for single-cell RNA-seq data",30271584,14,"Both","9","3","Yes","Yes","Yes","Yes","No",6498
+"HGC: fast hierarchical clustering for large-scale single-cell data",34096998,2,"Both","6","2","Yes","Yes","Yes","Yes","No",400000
+"Autoencoder-based cluster ensembles for single-cell RNA-seq data analysis",31870278,2,"Experimental","8","0","No","Yes","Yes","No","No",14963
+"Benchmarking cell-type clustering methods for spatially resolved transcriptomics data",36410733,15,"Both","7","7","Yes","Yes","Yes","Yes","Yes",25551
+"A review and performance evaluation of clustering frameworks for single-cell Hi-C data",36151714,8,"Experimental","6","0","Yes","Yes","Yes","No","No",19000
+"scMINER: a mutual information-based framework for identifying hidden drivers from single-cell omics data",36747874,3,"Experimental","11","0","Yes","Yes","Yes","Yes","No",10000000
+"A spectral clustering with self-weighted multiple kernel learning method for single-cell RNA-seq data",33003206,7,"Experimental","11","0","Yes","Yes","Yes","No","No",14437
+"EDClust: an EM-MM hybrid method for cell clustering in multiple-subject single-cell RNA sequencing",35561178,9,"Both","4","100","Yes","Yes","Yes","Yes","No",43603
+"Using single-cell cytometry to illustrate integrated multi-perspective evaluation of clustering algorithms using Pareto fronts",33508103,3,"Experimental","4","0","Yes","Yes","Yes","No","No",841644
+"Benchmark and Parameter Sensitivity Analysis of Single-Cell RNA Sequencing Clustering Methods",31921297,13,"Both","17","125","Yes","Yes","Yes","Yes","Yes",5000
+"Clustering methods for single-cell RNA-sequencing expression data: performance evaluation with varying sample sizes and cell compositions",31646845,11,"Both","5","800","Yes","Yes","Yes","No","No",1000
+"Single-Cell RNA Sequencing Data Interpretation by Evolutionary Multiobjective Clustering",30908236,4,"Both","17","125","Yes","Yes","Yes","Yes","Yes",5000
+"sc3: consensus clustering of single-cell rna-seq data",28346451,5,"Experimental","12","0","No","Yes","Yes","Yes","No",44808
+"A Hybrid Clustering Algorithm for Identifying Cell Types from Single-Cell RNA-Seq Data",30700040,3,"Experimental","8","0","No","No","Yes","No","No",518
+"ASTER: accurately estimating the number of cell types in single-cell chromatin accessibility data",36610708,4,"Experimental","27","0","Yes","Yes","Yes","Yes","Yes",136463
+"A model-based constrained deep learning clustering approach for spatially resolved single-cell data",36198490,7,"Both","25","25","No","Yes","Yes","Yes","No",400000
+"Benchmarking integration of single-cell differential expression",36944632,46,"Both","2","12","Yes","Yes","Yes","No","No",1050
+"Comparison of methods to detect differentially expressed genes between single-cell populations",27373736,5,"Experimental","3","0","Yes","Yes","Yes","Yes","No",574
+"Benchmarking of a Bayesian single cell RNAseq differential gene expression test for dose–response study designs",35061903,9,"Both","5","600","Yes","Yes","Yes","Yes","Yes",5000
+"Bias, robustness and scalability in single-cell differential expression analysis",29481549,36,"Both","9","3","No","Yes","Yes","Yes","No",400
+"Single-cell RNA-sequencing: assessment of differential expression analysis methods",28588607,6,"Both","2","10","No","Yes","Yes","Yes","No",100
+"Recommendations of scRNA-seq Differential Gene Expression Analysis Based on Comprehensive Benchmarking",35743881,12,"Both","17","125","Yes","Yes","Yes","Yes","No",5000
+"Comparative analysis of differential gene expression analysis tools for single-cell RNA sequencing data",30658573,12,"Both","5","600","Yes","Yes","Yes","Yes","No",800
+"Differential expression of single-cell RNA-seq data using Tweedie models",35656596,13,"Both","2","800","No","Yes","Yes","Yes","No",10000
+"Benchmarking methods for detecting differential states between conditions from multi-subject single-cell RNA-seq data",35880426,18,"Both","1","1280","No","Yes","Yes","No","No",20000
+"Reproducibility of Methods to Detect Differentially Expressed Genes from Single-Cell RNA Sequencing",32010190,18,"Both","4","1289","Yes","Yes","Yes","No","No",20000
+"Parameter tuning is a key part of dimensionality reduction via deep variational autoencoders for single cell RNA transcriptomics",30963075,5,"Both","3","40","No","Yes","Yes","No","No",5000
+"Accuracy, robustness and scalability of dimensionality reduction methods for single-cell RNA-seq analysis",31823809,18,"Both","3","40","Yes","Yes","Yes","No","No",20000
+"A Quantitative Framework for Evaluating Single-Cell Data Structure Preservation by Dimensionality Reduction Techniques",32375029,11,"Both","2","2","No","Yes","Yes","No","No",3060
+"Benchmarking principal component analysis for large-scale single-cell RNA-sequencing",31955711,10,"Both","4","18","Yes","Yes","Yes","Yes","Yes",1300000
+"Towards a comprehensive evaluation of dimension reduction methods for transcriptomic data visualization",35853932,8,"Both","10","2","Yes","Yes","Yes","Yes","No",1300000
+"Supervised application of internal validation measures to benchmark dimensionality reduction methods in scRNA-seq data",34374742,33,"Experimental","55","0","Yes","Yes","Yes","Yes","Yes",65500
+"A Comparison for Dimensionality Reduction Methods of Single-Cell RNA-seq Data",33833778,10,"Both","5","30","Yes","Yes","Yes","Yes","Yes",68579
+"Benchmarking joint multi-omics dimensionality reduction approaches for the study of cancer",33402734,9,"Both","10","6","Yes","Yes","Yes","No","No",621

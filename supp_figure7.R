@@ -1,7 +1,6 @@
 
 library(readr)
 library(ggplot2)
-library(readxl)
 
 
 theme_set(theme_bw() +
@@ -43,37 +42,63 @@ barplot_ggplot <- function( dataset , title   , xlab = "Dataset"   ){
 
 
 
-data <- read_excel("review of benchmarking - dataset specificity of common benchmarking papers.xlsx")
+
+df <- data.frame()
+  
+# created another excel on whether the paper reported dataset specific findings
+data <- read_excel("review of benchmarking - dataset specificity of common benchmarking papers_Dec2024.xlsx")
 
 
 data  <- split(  data$datasets , data$Topic )
 dataset <- unlist ( strsplit( data$`Batch correction` , ";"))
 dataset <- gsub("\\s+", "", dataset )
-p_batch <- barplot_ggplot(dataset , "Batch correction" )
+
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <- "Batch correction"
+df <- rbind(df,  temp) 
+
+ 
+
 
 
 dataset <- unlist( strsplit ( data$`Celltype annotation` ,";"))
 dataset  <- gsub( "EMTAB-5061" , "E-MTAB-5061" , dataset  )
 dataset <- gsub("\\s+", "", dataset )
+mean( table(dataset) > 1 ) 
 
-p_celltype <- barplot_ggplot(dataset , "Celltype/state identification" )
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <- "Celltype annotation"
+df <- rbind(df,  temp) 
 
+ 
 
 
 dataset <- unlist( strsplit ( data$Clustering ,";"))
 dataset <- gsub("\\s+", "", dataset )
+mean( table(dataset) > 1 ) 
 
-p_clustering <- barplot_ggplot(dataset, "Clustering" )
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <- "Clustering"
+df <- rbind(df,  temp) 
 
+ 
 
 
 
 dataset <- unlist(strsplit( data$DE , ";"))
 dataset <- gsub("\\s+", "", dataset )
+mean( table(dataset) > 1 ) 
 
-p_DE <- barplot_ggplot(dataset , "Differential expression" )
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <- "Differential expression"
+df <- rbind(df,  temp) 
 
 
+ 
 
 
 dataset <- unlist(strsplit( data$Deconvolution , ";"))
@@ -81,33 +106,83 @@ dataset  <- gsub("AaronM.Newman:Swindell_Skin_Signatures" ,
                  "AaronM.Newman;Swindell_Skin_Signatures" , dataset  )
 dataset <- unlist(strsplit( dataset , ";"))
 dataset <- gsub("\\s+", "", dataset )
+mean( table(dataset) > 1 ) 
 
-p_deconv <- barplot_ggplot(dataset , "Deconvolution"  )
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <- "Deconvolution"
+df <- rbind(df,  temp) 
 
+ 
 
 
 dataset <- unlist(strsplit( data$`Dimension reduction`, ";")) 
 dataset  <- gsub( ":",   ";" , dataset  )
 dataset <- unlist(strsplit( dataset , ";"))
 dataset <- gsub("\\s+", "", dataset )
-p_dimension <- barplot_ggplot(dataset , "Dimension reduction"  )
+
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <- "Dimension reduction"
+df <- rbind(df,  temp) 
+
+
+ mension <- barplot_ggplot(dataset , "Dimension reduction"  )
 
 
 dataset <- unlist(strsplit( data$GRN, ";")) 
 dataset <- gsub("\\s+", "", dataset )
-p_grn <- barplot_ggplot(dataset , "Gene regulatory network" )
+ 
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <-  "Gene regulatory network"
+df <- rbind(df,  temp) 
 
+ 
 
 dataset <- unlist(strsplit( data$Imputation, ";")) 
 dataset <- gsub("\\s+", "", dataset )
-p_imputation <- barplot_ggplot(dataset , "Imputation" )
+mean( table(dataset) > 1 ) 
+
+temp <-  data.frame( table(table(dataset)))
+temp$Var1 <- as.numeric(temp$Var1)
+temp$topic <-  "Imputation"
+df <- rbind(df,  temp) 
+ 
+
+# ggarrange( plotlist = list(p_batch , p_celltype , p_clustering , p_DE  , 
+#                            p_deconv, p_dimension ,  p_grn , p_imputation ) , 
+#            ncol = 2,  nrow = 4, 
+#            align = "h")
+# 
+#  
+
+
+total <- df %>%  dplyr::group_by(topic) %>% 
+  dplyr::summarise(total = sum( Freq))
+
+total$type <- "total"
+
+colnames( total ) <- c("topic",  "Number of papers", "Frequency")
+
+total <- total[order(total$`Number of papers`, decreasing = F), ]
+
+colnames(df)  <- c("Frequency" , "Number of papers", "topic")
 
 
 
-ggarrange( plotlist = list(p_batch , p_celltype , p_clustering , p_DE  , 
-                           p_deconv, p_dimension ,  p_grn , p_imputation ) , 
-           ncol = 2,  nrow = 4, 
-           align = "h")
+df <- rbind(df, total)
 
+df 
+
+
+df$topic <- factor(df$topic, levels = c( total$topic ))
+
+ggplot(df , aes(Frequency, topic)) +
+  geom_tile(aes(fill = `Number of papers`)) +
+  geom_text(aes(label = `Number of papers`)) +
+  scale_fill_gradient(low = "white", high = "steelblue")
+
+ 
 
 
